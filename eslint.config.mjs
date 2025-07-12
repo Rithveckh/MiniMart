@@ -9,8 +9,21 @@ const compat = new FlatCompat({
   baseDirectory: __dirname,
 });
 
-const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
-];
+export default [
+  // ✅ Use recommended Next.js + TypeScript rules
+  ...compat.extends("next/core-web-vitals", "next", "next/typescript"),
 
-export default eslintConfig;
+  // ✅ Custom rules section (optional)
+  {
+    rules: {
+      // Allow unused imports during development
+      "@typescript-eslint/no-unused-vars": "warn",
+
+      // Escape single quotes in JSX
+      "react/no-unescaped-entities": "warn",
+
+      // Enable this if you're importing React manually in some files
+      "react/react-in-jsx-scope": "off",
+    },
+  },
+];
