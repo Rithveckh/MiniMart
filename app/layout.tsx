@@ -1,7 +1,17 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import {
+  ClerkProvider,
+  SignInButton,
+  SignUpButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from '@clerk/nextjs'
+import { shadesOfPurple } from "@clerk/themes";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -23,12 +33,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <>
+    <ClerkProvider
+      appearance={{
+    baseTheme: shadesOfPurple // 👈 use dark theme (or import light if needed)
+    }}>
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased dotted-background`}
       >
+        <Navbar/>
         {children}
+        <Footer/>
       </body>
     </html>
+    </ClerkProvider>
+    </>
   );
 }
